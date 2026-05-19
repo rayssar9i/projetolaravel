@@ -33,6 +33,7 @@ class ProfileController extends Controller
             'rejeitadas' => Recipe::where('user_id', $user->id)->where('status', 'rejected')->count(),
         ];
         
+        // 🔥 IMPORTANTE: Retornar apenas profile.show (não profile.profile)
         return view('profile.show', compact('user', 'recipes', 'stats'));
     }
 

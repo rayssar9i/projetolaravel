@@ -1,23 +1,3 @@
-<!--@extends('layouts.main')
-
-@section('title', 'Meu Perfil')
-
-@section('content')
-<div class="container mt-4">
-    <h2>Perfil de {{ $user->name }}</h2>
-    <p>E-mail: {{ $user->email }}</p>
-    
-    <hr>
-    <h4>Suas Estatísticas</h4>
-    <ul>
-        <li>Total de Receitas: {{ $stats['total'] }}</li>
-        <li>Aprovadas: {{ $stats['aprovadas'] }}</li>
-        <li>Pendentes: {{ $stats['pendentes'] }}</li>
-    </ul>
-</div>
-@endsection
-
--->
 @extends('layouts.main')
 
 @section('title', 'Meu Perfil')
@@ -32,8 +12,7 @@
     <div class="profile-header">
         <div class="profile-avatar-container">
             <div class="profile-avatar">
-                <img src="{{ asset('img/default-avatar.png') }}" alt="{{ $user->name }}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="avatar-placeholder" style="display: none;">
+                <div class="avatar-placeholder">
                     {{ strtoupper(substr($user->name, 0, 1)) }}
                 </div>
             </div>
@@ -41,16 +20,25 @@
         
         <div class="profile-info">
             <h1 class="profile-name">{{ $user->name }}</h1>
+            <p class="profile-email">{{ $user->email }}</p>
             <p class="profile-email">Cadastrado desde: {{ $user->created_at->format('d/m/Y') }}</p>
             
             <div class="profile-stats">
                 <div class="stat-item">
                     <span class="stat-number">{{ $stats['total'] }}</span>
-                    <span class="stat-label">Receitas</span>
+                    <span class="stat-label">Total</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-number">{{ $stats['aprovadas'] }}</span>
-                    <span class="stat-label">Receitas</span>
+                    <span class="stat-label">Aprovadas</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">{{ $stats['pendentes'] }}</span>
+                    <span class="stat-label">Pendentes</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">{{ $stats['rejeitadas'] }}</span>
+                    <span class="stat-label">Rejeitadas</span>
                 </div>
             </div>
         </div>

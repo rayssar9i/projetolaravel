@@ -19,9 +19,9 @@
         <nav class="navbar">
             <div class="nav-left">
                 <a href="{{ route('home') }}" class="logo-circulo"></a>
-                <a href="#">Receitas salgadas</a>
+                <!--<a href="#">Receitas salgadas</a>
                 <a href="#">Receitas doces</a>
-                <a href="#">Ultimas Receitas</a>
+                <a href="#">Ultimas Receitas</a>-->
                 <a href="{{ route('recipes.create') }}">Publicar uma nova Receita</a>
             </div>
 

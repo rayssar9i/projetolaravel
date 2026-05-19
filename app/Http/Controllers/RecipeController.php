@@ -6,31 +6,24 @@ use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use App\Models\Category;
 use App\Models\Recipe;
-
+use Illuminate\View\View;
 
 class RecipeController extends Controller
 {
     public function index() { 
         return view('recipes.home', [
             'categorias'=> Category::all(),
-            'ultimas'=> Recipe::latest()->take(6)->get(),
-            'almoco'=> Recipe::where('category_id', 5)->take(6)->get(),
-            'Sobremesas'=> Recipe::where('category_id',4)->take(6)->get()
+            // 🔥 CORREÇÃO: Apenas receitas APROVADAS aparecem na home
+            'ultimas'=> Recipe::where('status', 'approved')->latest()->take(6)->get(),
+            'almoco'=> Recipe::where('category_id', 5)->where('status', 'approved')->take(6)->get(),
+            'Sobremesas'=> Recipe::where('category_id', 4)->where('status', 'approved')->take(6)->get(),
+            'Massas'=> Recipe::where('category_id', 3)->where('status', 'approved')->take(6)->get()
         ]);
-
-
-    }
-
-
-    public function profile(){
-        return view('recipes.profile');
     }
 
     public function solicitacoes(){
-        // Busca todas as receitas (ou as específicas das solicitações)
+        // Busca todas as receitas pendentes
         $recipes = Recipe::where('status', 'pending')->latest()->paginate(10); 
-
-        // Passa a variável $recipes para a view
         return view('recipes.solicitacoes', compact('recipes'));
     }
 
@@ -41,14 +34,30 @@ class RecipeController extends Controller
     
     public function store(Request $request)
     {
+        // 🔥 VALIDAÇÃO DOS DADOS
+        $request->validate([
+            'title' => 'required|string|max:100',
+            'ingredients' => 'required|string',
+            'instructions' => 'required|string',
+            'category_id' => 'required|exists:categories,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'extra' => 'nullable|string',
+        ]);
+
         $recipe = new Recipe; 
         $recipe->title = $request->title;
         $recipe->ingredients = $request->ingredients;
         $recipe->instructions = $request->instructions;
         $recipe->extra_info = $request->extra;
         $recipe->category_id = $request->category_id;
-        $recipe->user_id = 1; 
+        
+        // 🔥 CORREÇÃO CRÍTICA 1: user_id do usuário logado
+        $recipe->user_id = auth()->id();
+        
+        // 🔥 CORREÇÃO CRÍTICA 2: Status SEMPRE pending ao criar
+        $recipe->status = 'pending';
 
+        // Upload da imagem
         if($request->hasFile('image') && $request->file('image')->isValid()) {
             $requestImage = $request->image;
             $extension = $requestImage->extension();
@@ -58,17 +67,29 @@ class RecipeController extends Controller
         }
 
         $recipe->save();
-        return redirect('/')->with('msg', 'Receita criada com sucesso!');
+        
+        // 🔥 Redireciona para o perfil com mensagem de sucesso
+        return redirect()
+            ->route('profile.show')
+            ->with('success', 'Receita enviada para aprovação! Aguarde a análise do gerente.');
     }
 
-    // MANTÉM APENAS ESTA VERSÃO DO SHOW:
+    /**
+     * Mostrar detalhes da receita
+     * 🔥 IMPORTANTE: Apenas receitas aprovadas podem ser vistas publicamente
+     */
     public function show($id) {
         $recipe = Recipe::findOrFail($id);
+        
+        // Se a receita não está aprovada, só o autor ou admin pode ver
+        if ($recipe->status !== 'approved') {
+            if (!auth()->check() || (auth()->id() !== $recipe->user_id && !auth()->user()->isManager())) {
+                abort(403, 'Esta receita ainda não foi aprovada.');
+            }
+        }
+        
         return view('recipes.show', ['recipe' => $recipe]);
     }
-    /**
- * Deletar receita (apenas o dono ou admin)
- */
 
     /**
      * Formulário de editar receita
@@ -82,11 +103,11 @@ class RecipeController extends Controller
             abort(403, 'Você não tem permissão para editar esta receita.');
         }
         
-        // Não permitir editar receitas aprovadas
+        // 🔥 CORREÇÃO: Não permitir editar receitas aprovadas
         if ($recipe->status === 'approved') {
             return redirect()
                 ->route('profile.show')
-                ->with('error', 'Receitas aprovadas não podem ser editadas.');
+                ->with('error', 'Receitas aprovadas não podem ser editadas. Se precisar fazer alterações, entre em contato com o gerente.');
         }
         
         $categorias = Category::all();
@@ -126,7 +147,12 @@ class RecipeController extends Controller
         $recipe->instructions = $request->instructions;
         $recipe->extra_info = $request->extra;
         $recipe->category_id = $request->category_id;
-        $recipe->status = 'approved'; // esta voltando como aprovado
+        
+        // 🔥 CORREÇÃO CRÍTICA 3: Status volta para PENDING ao atualizar
+        $recipe->status = 'pending';
+        
+        // Limpa motivo de rejeição anterior
+        $recipe->rejection_reason = null;
 
         // Upload da nova imagem (se houver)
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
@@ -150,10 +176,12 @@ class RecipeController extends Controller
         
         return redirect()
             ->route('profile.show')
-            ->with('success', 'Receita atualizada e enviada para aprovação!');
+            ->with('success', 'Receita atualizada e enviada para nova aprovação!');
     }
 
-
+    /**
+     * Deletar receita
+     */
     public function destroy($id): RedirectResponse
     {
         $recipe = Recipe::findOrFail($id);
@@ -178,10 +206,3 @@ class RecipeController extends Controller
             ->with('success', 'Receita excluída com sucesso!');
     }
 }
-
-
-
-
-     //public function create(){
-        //return view('events.create')
-
