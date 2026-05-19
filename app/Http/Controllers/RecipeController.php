@@ -17,7 +17,8 @@ class RecipeController extends Controller
             'ultimas'=> Recipe::where('status', 'approved')->latest()->take(6)->get(),
             'almoco'=> Recipe::where('category_id', 5)->where('status', 'approved')->take(6)->get(),
             'Sobremesas'=> Recipe::where('category_id', 4)->where('status', 'approved')->take(6)->get(),
-            'Massas'=> Recipe::where('category_id', 3)->where('status', 'approved')->take(6)->get()
+            'Massas'=> Recipe::where('category_id', 3)->where('status', 'approved')->take(6)->get(),
+            'DietasRestritivas' => Recipe::where('category_id', 6)->where('status', 'approved')->take(6)->get()
         ]);
     }
 
