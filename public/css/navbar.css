@@ -62,11 +62,23 @@ header {
     outline: none;
 }
 
-.perfil-icon {
-    font-size: 24px;
-    text-decoration: none;
-    color: white;
-    margin-right: 20px;
+.perfil-icon-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 1.5rem; /* Tamanho do emoji 👤 */
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.perfil-icon-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Ajustes finos para o menu não quebrar o layout */
+.dropdown-menu {
+    border-radius: 8px;
+    margin-top: 10px !important;
 }
 
 .admin-button {
@@ -75,3 +87,17 @@ header {
     font-size: 14px;
     color:#cb005b;
     }
+/* Corrige a cor do texto dos itens do dropdown para não ficarem brancos no fundo branco */
+.nav-right .dropdown-menu a.dropdown-item,
+.nav-right .dropdown-menu button.dropdown-item {
+    color: #212529 !important; /* Cor padrão escura do Bootstrap */
+    font-size: 14px;
+    font-weight: 400;
+}
+
+/* Efeito visual opcional quando passar o mouse nos itens do menu */
+.nav-right .dropdown-menu a.dropdown-item:hover,
+.nav-right .dropdown-menu button.dropdown-item:hover {
+    background-color: #f8f9fa; /* Fundo cinza bem clarinho */
+    color: #cb005b !important; /* Muda o texto para o tom de rosa/vermelho do seu admin-button */
+}

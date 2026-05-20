@@ -7,7 +7,7 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"> 
-
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
     @stack('styles')
 
@@ -29,13 +29,38 @@
                 <div class="search-container">
                     <input type="text" class="search-bar" placeholder="Pesquisar...">
                 </div>
-                <!--PRO BOTAO SO APARECER PRO ADIMIN--> 
+
+                <!-- Se for Admin, mostra o botão de solicitações -->
                 @auth
                     @if(auth()->user()->isAdmin())
                         <a href="{{ route('solicitacoes') }}" class="btn admin-button">Ver solicitações</a>
                     @endif
                 @endauth
-                <a href="{{ route('profile.show') }}" class="perfil-icon">👤</a>
+
+                <!-- Menu Dropdown do Perfil -->
+                <div class="dropdown">
+                    <button class="perfil-icon-btn" type="button" id="dropdownMenuPerfil" data-bs-toggle="dropdown" aria-expanded="false">
+                        👤
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="dropdownMenuPerfil">
+                        <li><h6 class="dropdown-header">Olá, {{ auth()->user()->name ?? 'Usuário' }}</h6></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('profile.show') }}">
+                                Meu Perfil
+                            </a>
+                        </li>
+                        <li>
+                            <!-- Formulário de Logout padrão do Laravel -->
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="dropdown-item text-danger">
+                                    Sair
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
     </header>

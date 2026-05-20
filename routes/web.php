@@ -10,8 +10,11 @@ use Illuminate\Support\Facades\Route;
 // ============================================
 
 Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+       if (auth()->check()) {
+           return redirect()->route('home');
+       }
+       return redirect()->route('login');
+   });
 
 Route::get('/home', [RecipeController::class, 'index'])->name('home');
 
@@ -21,9 +24,9 @@ Route::get('/home', [RecipeController::class, 'index'])->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     
-    Route::get('/dashboard', function () {
+    /*Route::get('/dashboard', function () {
         return view('dashboard');
-    })->name('dashboard');
+    })->name('dashboard');*/
 
     // ============================================
     // PERFIL

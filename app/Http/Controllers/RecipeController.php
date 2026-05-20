@@ -10,17 +10,19 @@ use Illuminate\View\View;
 
 class RecipeController extends Controller
 {
-    public function index() { 
-        return view('recipes.home', [
-            'categorias'=> Category::all(),
-            // 🔥 CORREÇÃO: Apenas receitas APROVADAS aparecem na home
-            'ultimas'=> Recipe::where('status', 'approved')->latest()->take(6)->get(),
-            'almoco'=> Recipe::where('category_id', 5)->where('status', 'approved')->take(6)->get(),
-            'Sobremesas'=> Recipe::where('category_id', 4)->where('status', 'approved')->take(6)->get(),
-            'Massas'=> Recipe::where('category_id', 3)->where('status', 'approved')->take(6)->get(),
-            'DietasRestritivas' => Recipe::where('category_id', 6)->where('status', 'approved')->take(6)->get()
-        ]);
-    }
+  public function index() { 
+    return view('recipes.home', [
+        'categorias'=> Category::all(),
+        'ultimas'=> Recipe::where('status', 'approved')->latest()->take(6)->get(),
+        'almoco'=> Recipe::where('category_id', 5)->where('status', 'approved')->take(6)->get(),
+        'ComidaEstrangeira'=> Recipe::where('category_id', 4)->where('status', 'approved')->take(6)->get(),
+        'Massas'=> Recipe::where('category_id', 3)->where('status', 'approved')->take(6)->get(),
+        'DietasRestritivas' => Recipe::where('category_id', 6)->where('status', 'approved')->take(6)->get(),
+        'Doces' =>Recipe::where('category_id', 2)->where('status', 'approved')->take(6)->get(), 
+        'Salgados' =>Recipe::where('category_id', 1)->where('status', 'approved')->take(6)->get(),
+        'destaques' => Recipe::where('status', 'approved')->whereNotNull('image')->inRandomOrder()->take(3)->get()    
+    ]);
+}
 
     public function solicitacoes(){
         // Busca todas as receitas pendentes
@@ -35,7 +37,7 @@ class RecipeController extends Controller
     
     public function store(Request $request)
     {
-        // 🔥 VALIDAÇÃO DOS DADOS
+        //  VALIDAÇÃO DOS DADOS
         $request->validate([
             'title' => 'required|string|max:100',
             'ingredients' => 'required|string',
@@ -52,10 +54,10 @@ class RecipeController extends Controller
         $recipe->extra_info = $request->extra;
         $recipe->category_id = $request->category_id;
         
-        // 🔥 CORREÇÃO CRÍTICA 1: user_id do usuário logado
+        // CORREÇÃO CRÍTICA 1: user_id do usuário logado
         $recipe->user_id = auth()->id();
         
-        // 🔥 CORREÇÃO CRÍTICA 2: Status SEMPRE pending ao criar
+        //CORREÇÃO CRÍTICA 2: Status SEMPRE pending ao criar
         $recipe->status = 'pending';
 
         // Upload da imagem
@@ -69,7 +71,7 @@ class RecipeController extends Controller
 
         $recipe->save();
         
-        // 🔥 Redireciona para o perfil com mensagem de sucesso
+        //  Redireciona para o perfil com mensagem de sucesso
         return redirect()
             ->route('profile.show')
             ->with('success', 'Receita enviada para aprovação! Aguarde a análise do gerente.');
@@ -77,7 +79,7 @@ class RecipeController extends Controller
 
     /**
      * Mostrar detalhes da receita
-     * 🔥 IMPORTANTE: Apenas receitas aprovadas podem ser vistas publicamente
+     * IMPORTANTE: Apenas receitas aprovadas podem ser vistas publicamente
      */
     public function show($id) {
         $recipe = Recipe::findOrFail($id);

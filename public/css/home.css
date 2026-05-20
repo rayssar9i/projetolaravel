@@ -50,3 +50,30 @@ body { background-color: #f7e7e4; } /* Cor de fundo creme do protótipo */
     border-radius: 15px;
     object-fit: cover;
 }
+/* Container do carrossel para garantir bordas arredondadas perfeitas */
+#bannerCarousel {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+/* Estilização da imagem do carrossel */
+/* Nova regra para controlar o banner perfeitamente */
+/* Nova regra para controlar o banner perfeitamente (Atualizada e Blindada) */
+.carousel-banner-bg {
+    display: block;                     /* Força a div a se comportar como um bloco cheio */
+    width: 100%;                        /* Garante 100% da largura da tela */
+    height: 400px;                      /* Altura fixa para computadores */
+    min-height: 400px;                  /* Impede o Bootstrap de esmagar a altura */
+    background-size: cover !important;  /* Força o corte proporcional sem distorcer NUNCA */
+    background-position: center center; /* Mantém o foco exatamente no meio da foto */
+    background-repeat: no-repeat;       /* Evita que a imagem se duplique */
+    filter: brightness(0.85);           /* Mantém o tom escuro para o texto destacar */
+}
+
+/* Garante o tamanho correto e proporcional em telas menores/celulares */
+@media (max-width: 768px) {
+    .carousel-banner-bg {
+        height: 250px;                  
+        min-height: 250px;              /* Ajusta o limite mínimo no celular */
+    }
+}
