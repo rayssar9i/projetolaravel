@@ -18,7 +18,10 @@
     <header>
         <nav class="navbar">
             <div class="nav-left">
-                <a href="{{ route('home') }}" class="logo-circulo"></a>
+               <!-- <a href="{{ route('home') }}" class="logo-circulo"></a>-->
+                <a href="{{ route('home') }}" class="logo-circulo">
+                     <img src="{{ asset('img/logo/logo.svg') }}" alt="Logo Nossas Receitas" class="logo-img">
+                </a>
                 <!--<a href="#">Receitas salgadas</a>
                 <a href="#">Receitas doces</a>
                 <a href="#">Ultimas Receitas</a>-->

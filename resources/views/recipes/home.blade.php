@@ -4,22 +4,6 @@
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
-    <style>
-        /* Efeito opcional de transição suave ao clicar nas categorias */
-        html {
-            scroll-behavior: smooth;
-        }
-        /* Torna os círculos de categoria visualmente clicáveis */
-        .category-link {
-            text-decoration: none;
-            color: inherit;
-            transition: transform 0.2s ease;
-        }
-        .category-link:hover {
-            transform: scale(1.05);
-            color: #e57373; /* Cor rosa/vermelha idêntica à sua navbar */
-        }
-    </style>
 @endpush
 
 @section('content')

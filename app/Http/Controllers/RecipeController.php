@@ -20,7 +20,7 @@ class RecipeController extends Controller
         'DietasRestritivas' => Recipe::where('category_id', 6)->where('status', 'approved')->take(6)->get(),
         'Doces' =>Recipe::where('category_id', 2)->where('status', 'approved')->take(6)->get(), 
         'Salgados' =>Recipe::where('category_id', 1)->where('status', 'approved')->take(6)->get(),
-        'destaques' => Recipe::where('status', 'approved')->whereNotNull('image')->inRandomOrder()->take(3)->get()    
+        'destaques' => Recipe::where('status', 'approved')->whereNotNull('image')->inRandomOrder()->take(6)->get()    
     ]);
 }
 

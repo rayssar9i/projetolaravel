@@ -37,13 +37,26 @@ header {
     font-weight: 500;
 }
 
+/* 1. Atualize o .logo-circulo para alinhar o conteúdo no centro */
 .logo-circulo {
-    display: block; /* Importante para o link assumir tamanho */
+    display: flex;          /* Mudado de block para flex */
+    justify-content: center; /* Centraliza a logo horizontalmente */
+    align-items: center;     /* Centraliza a logo verticalmente */
     width: 50px;
     height: 50px;
-    background-color: #ddd;
+    background-color: #fff;  /* Mudado de #ddd para branco para o SVG destacar bem */
     border-radius: 50%;
     margin-right: 15px;
+    overflow: hidden;        /* Garante que nada saia do círculo */
+    flex-shrink: 0;          /* Impede a navbar de esmagar o círculo em telas menores */
+}
+
+/* 2. Adicione esta nova regra para controlar o tamanho do SVG */
+.logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;     /* Faz o SVG diminuir proporcionalmente sem distorcer */
+    padding: 6px;            /* Dá um respiro para a logo não encostar na borda do círculo */
 }
 
 
