@@ -9,6 +9,64 @@
 @section('content')
 <div class="container mt-4">
     
+  <!-- Seção de Resultados da Busca -->
+@if(request('search'))
+    <div class="search-results-section">
+        <h2>
+            <ion-icon name="search-outline"></ion-icon>
+            Resultados da busca por: <strong>"{{ request('search') }}"</strong>
+            <span class="results-badge">{{ $recipes->count() }} {{ $recipes->count() == 1 ? 'receita' : 'receitas' }}</span>
+        </h2>
+        
+        @if($recipes->count() > 0)
+            <div class="row g-4">
+                @foreach($recipes as $recipe)
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card search-result-card">
+                            @if($recipe->image)
+                                <img src="/img/recipes/{{ $recipe->image }}" 
+                                     class="card-img-top" 
+                                     alt="{{ $recipe->title }}">
+                            @else
+                                <div class="search-result-placeholder">
+                                    <ion-icon name="restaurant-outline"></ion-icon>
+                                </div>
+                            @endif
+                            
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $recipe->title }}</h5>
+                                <p class="card-text">
+                                    <small class="text-muted">
+                                        <ion-icon name="pricetag-outline"></ion-icon>
+                                        {{ $recipe->category->name ?? 'Sem categoria' }}
+                                    </small>
+                                </p>
+                                <a href="{{ route('recipes.show', $recipe->id) }}" class="btn btn-primary">
+                                    <ion-icon name="eye-outline"></ion-icon>
+                                    Ver Receita
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        @else
+            <div class="alert alert-warning">
+                <ion-icon name="alert-circle-outline"></ion-icon>
+                <div>
+                    <p>Nenhuma receita encontrada com o termo <strong>"{{ request('search') }}"</strong></p>
+                    <p class="mb-0" style="font-size: 14px; color: #6c757d;">Tente usar outras palavras-chave ou navegue pelas categorias abaixo.</p>
+                    <a href="{{ route('home') }}" class="btn btn-secondary">
+                        <ion-icon name="arrow-back-outline"></ion-icon>
+                        Voltar para home
+                    </a>
+                </div>
+            </div>
+        @endif
+    </div>
+@else
+    <!-- Conteúdo normal da home -->
+
     @if($destaques->count() > 0)
     <div id="bannerCarousel" class="carousel slide mb-5 shadow-sm" data-bs-ride="carousel" style="border-radius: 15px; overflow: hidden;">
         <div class="carousel-indicators">
@@ -46,20 +104,29 @@
     @endif
 
     <h5 class="section-title">Receitas mais buscadas</h5>
-    <div class="d-flex justify-content-between mb-5 text-center flex-wrap gap-2">
-        @foreach($categorias as $cat)
-            @php
-                // Remove acentos e espaços para criar IDs válidos (ex: "Dietas Restritivas" vira "dietas-restritivas")
-                $slug = Str::slug($cat->name);
-            @endphp
-            <a href="#{{ $slug }}" class="category-link d-flex flex-column align-items-center">
-                <div class="category-item">
-                    <div class="category-circle"></div>
-                    <span>{{ $cat->name }}</span> 
+<div class="d-flex justify-content-between mb-5 text-center flex-wrap gap-3">
+    @foreach($categorias as $cat)
+        @php
+            $slug = Str::slug($cat->name);
+        @endphp
+        <a href="#{{ $slug }}" class="category-link text-decoration-none">
+            <div class="category-item">
+                <div class="category-circle">
+                    @if($cat->image)
+                        <img src="{{ asset('img/categorias/' . $cat->image) }}" 
+                             alt="{{ $cat->name }}"
+                             class="category-image">
+                    @else
+                        <div class="category-placeholder">
+                            <ion-icon name="restaurant-outline"></ion-icon>
+                        </div>
+                    @endif
                 </div>
-            </a>
-        @endforeach
-    </div>
+                <span class="category-name">{{ $cat->name }}</span>
+            </div>
+        </a>
+    @endforeach
+</div>
 
     <div class="recipe-section mb-5">
         <h5 class="section-title">Últimas Receitas</h5>
@@ -228,6 +295,7 @@
             @endforeach
         </div>
     </div>
+    @endif
 
 </div>
 @endsection

@@ -19,18 +19,28 @@
         <nav class="navbar">
             <div class="nav-left">
                <!-- <a href="{{ route('home') }}" class="logo-circulo"></a>-->
-                <a href="{{ route('home') }}" class="logo-circulo">
+                <a href="{{ route('home') }}" class="logo-circulo"> 
                      <img src="{{ asset('img/logo/logo.svg') }}" alt="Logo Nossas Receitas" class="logo-img">
                 </a>
                 <!--<a href="#">Receitas salgadas</a>
                 <a href="#">Receitas doces</a>
                 <a href="#">Ultimas Receitas</a>-->
+                <p class = "nossas-receitas">Nossas receitas</p>
                 <a href="{{ route('recipes.create') }}">Publicar uma nova Receita</a>
             </div>
 
             <div class="nav-right">
                 <div class="search-container">
-                    <input type="text" class="search-bar" placeholder="Pesquisar...">
+                    <form action="{{ route('home') }}" method="GET">
+                        <input 
+                            type="text" 
+                            name="search" 
+                            class="search-bar" 
+                            placeholder="Pesquisar receita..." 
+                            value="{{ request('search') }}"
+                        >
+                        <button type="submit" style="display:none;">Buscar</button>
+                    </form>
                 </div>
 
                 <!-- Se for Admin, mostra o botão de solicitações -->

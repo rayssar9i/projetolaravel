@@ -11,16 +11,34 @@ use Illuminate\View\View;
 class RecipeController extends Controller
 {
   public function index() { 
+    $search = request('search');
+    //dd($search, request()->all());
+    $approvedRecipes = Recipe::where('status', 'approved')->get();
+    // Se houver busca, filtramos direto no banco
+    if ($search && trim($search)) {
+        $recipes = $approvedRecipes->filter(function($recipe) use ($search) {
+            return stripos($recipe->title, $search) !== false;
+        });
+    } else {
+        $recipes = $approvedRecipes; //exibe todas aprovados 
+    }
+
+    // Trazemos as receitas aprovadas de uma vez só para filtrar na memória (evita bombardeie ao BD)
+    
+
     return view('recipes.home', [
-        'categorias'=> Category::all(),
-        'ultimas'=> Recipe::where('status', 'approved')->latest()->take(6)->get(),
-        'almoco'=> Recipe::where('category_id', 5)->where('status', 'approved')->take(6)->get(),
-        'ComidaEstrangeira'=> Recipe::where('category_id', 4)->where('status', 'approved')->take(6)->get(),
-        'Massas'=> Recipe::where('category_id', 3)->where('status', 'approved')->take(6)->get(),
-        'DietasRestritivas' => Recipe::where('category_id', 6)->where('status', 'approved')->take(6)->get(),
-        'Doces' =>Recipe::where('category_id', 2)->where('status', 'approved')->take(6)->get(), 
-        'Salgados' =>Recipe::where('category_id', 1)->where('status', 'approved')->take(6)->get(),
-        'destaques' => Recipe::where('status', 'approved')->whereNotNull('image')->inRandomOrder()->take(6)->get()    
+        'recipes' => $recipes,
+        'categorias' => Category::all(),
+        'ultimas' => $approvedRecipes->sortByDesc('created_at')->take(6),
+        'destaques' => $approvedRecipes->whereNotNull('image')->random(min(6, $approvedRecipes->whereNotNull('image')->count())),
+        
+        // Filtros por Categoria direto na Collection
+        'almoco' => $approvedRecipes->where('category_id', 5)->take(6),
+        'ComidaEstrangeira' => $approvedRecipes->where('category_id', 4)->take(6),
+        'Massas' => $approvedRecipes->where('category_id', 3)->take(6),
+        'DietasRestritivas' => $approvedRecipes->where('category_id', 6)->take(6),
+        'Doces' => $approvedRecipes->where('category_id', 2)->take(6), 
+        'Salgados' => $approvedRecipes->where('category_id', 1)->take(6),
     ]);
 }
 
