@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
     @stack('styles')
 
-    <script src="/js/script.js" defer></script> 
+    <script src="{{ asset('js/script.js') }}" defer></script>
 </head> 
 
 <body>
