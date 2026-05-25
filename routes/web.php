@@ -28,19 +28,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('dashboard');
     })->name('dashboard'); rota que veio com autenticação do breeze laravel*/
 
-    // ============================================
-    // PERFIL
-    // ============================================
-    
+//perfil 
+
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/profile/receitas', [ProfileController::class, 'myRecipes'])->name('profile.recipes');
     
-    // ============================================
-    // RECEITAS - ORDEM CORRETA!
-    // ============================================
     
     //  CREATE (específica)
     Route::get('/recipes/create', [RecipeController::class, 'create'])->name('recipes.create');
