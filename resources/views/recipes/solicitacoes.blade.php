@@ -57,7 +57,7 @@
                                 <button type="submit" 
                                         class="btn btn-success btn-sm"
                                         onclick="return confirm('Aprovar esta receita?')">
-                                    ✓ Aprovar
+                                     Aprovar
                                 </button>
                             </form>
 
@@ -65,7 +65,7 @@
                                     class="btn btn-danger btn-sm"
                                     data-bs-toggle="modal" 
                                     data-bs-target="#rejectModal{{ $recipe->id }}">
-                                ✗ Reprovar
+                                 Reprovar
                             </button>
                         </div>
                     </div>

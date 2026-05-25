@@ -26,7 +26,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     
     /*Route::get('/dashboard', function () {
         return view('dashboard');
-    })->name('dashboard');*/
+    })->name('dashboard'); rota que veio com autenticação do breeze laravel*/
 
     // ============================================
     // PERFIL
@@ -42,19 +42,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // RECEITAS - ORDEM CORRETA!
     // ============================================
     
-    // 1️⃣ CREATE (específica)
+    //  CREATE (específica)
     Route::get('/recipes/create', [RecipeController::class, 'create'])->name('recipes.create');
     Route::post('/recipes', [RecipeController::class, 'store'])->name('recipes.store');
     
-    // 2️⃣ EDIT (específica com parâmetro)
+    //  EDIT (específica com parâmetro)
     Route::get('/recipes/{id}/edit', [RecipeController::class, 'edit'])->name('recipes.edit');
     
-    // 3️⃣ UPDATE e DELETE (genéricas mas com método específico)
+    // DELETE (genéricas mas com método específico)
     Route::patch('/recipes/{id}', [RecipeController::class, 'update'])->name('recipes.update');
     Route::delete('/recipes/{id}', [RecipeController::class, 'destroy'])->name('recipes.destroy');
 });
 
-// 4️⃣ SHOW (pública, genérica) - DEVE SER A ÚLTIMA!
+    //SHOW (pública, genérica) - DEVE SER A ÚLTIMA!
 Route::get('/recipes/{id}', [RecipeController::class, 'show'])->name('recipes.show');
 
 // ============================================

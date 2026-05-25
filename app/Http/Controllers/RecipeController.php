@@ -75,7 +75,7 @@ class RecipeController extends Controller
         // CORREÇÃO CRÍTICA 1: user_id do usuário logado
         $recipe->user_id = auth()->id();
         
-        //CORREÇÃO CRÍTICA 2: Status SEMPRE pending ao criar
+        //CORREÇÃO: Status SEMPRE pending ao criar
         $recipe->status = 'pending';
 
         // Upload da imagem
@@ -124,7 +124,7 @@ class RecipeController extends Controller
             abort(403, 'Você não tem permissão para editar esta receita.');
         }
         
-        // 🔥 CORREÇÃO: Não permitir editar receitas aprovadas
+        // Não permitir editar receitas aprovadas
         if ($recipe->status === 'approved') {
             return redirect()
                 ->route('profile.show')
@@ -169,7 +169,7 @@ class RecipeController extends Controller
         $recipe->extra_info = $request->extra;
         $recipe->category_id = $request->category_id;
         
-        // 🔥 CORREÇÃO CRÍTICA 3: Status volta para PENDING ao atualizar
+        // Status volta para PENDING ao atualizar
         $recipe->status = 'pending';
         
         // Limpa motivo de rejeição anterior
