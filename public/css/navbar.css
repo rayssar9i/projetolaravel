@@ -1,78 +1,73 @@
-/* Estilos base para o cabeçalho rosa */
-
 body {
     background-color: #f7e7e4;
     margin: 0;
-    padding-top: 80px; /* Isso empurra todo o conteúdo para baixo da navbar */
-} 
-header {
-    width: 100%;
-    position: absolute; /* Ou 'fixed' se quiser que ela siga o scroll */
-    top: 0;
-    left: 0;
-    z-index: 1050; /* Garante que fique acima de outros elementos do Bootstrap */
+    padding-top: 80px;
 }
 
-.nossas-receitas{
-    color:#fff;
-    justify-content: center; /* Centraliza a logo horizontalmente */
-    align-items: center;  
-    margin-top: 10px;
-    margin-right: 10px;
+header {
+    width: 100%;
+    position: fixed; /* fixed: navbar acompanha o scroll */
+    top: 0;
+    left: 0;
+    z-index: 1050;
 }
 
 .navbar {
-    background-color: #e57373; /* O tom de vermelho do seu print */
+    background-color: #e57373;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
     min-height: 70px;
-    
 }
 
-.nav-left, .nav-right {
+.nav-left,
+.nav-right {
     display: flex;
     align-items: center;
-    gap: 20px; 
+    gap: 20px;
 }
 
-/* Aqui resolvemos a cor dos links */
-.nav-left a, .nav-right a {
-    color: white; /* Cor branca para contrastar com o rosa */
+.nav-left a,
+.nav-right a {
+    color: white;
     text-decoration: none;
     font-size: 14px;
     font-weight: 500;
 }
 
-/* 1. Atualize o .logo-circulo para alinhar o conteúdo no centro */
-.logo-circulo {
-    display: flex;          /* Mudado de block para flex */
-    justify-content: center; /* Centraliza a logo horizontalmente */
-    align-items: center;     /* Centraliza a logo verticalmente */
-    width: 50px;
-    height: 50px;
-    background-color: #fff;  /* Mudado de #ddd para branco para o SVG destacar bem */
-    border-radius: 50%;
-    margin-right: 15px;
-    overflow: hidden;        /* Garante que nada saia do círculo */
-    flex-shrink: 0;          /* Impede a navbar de esmagar o círculo em telas menores */
+.nossas-receitas {
+    color: #fff;
+    margin: 0;        /* remove o margin-top: 10px que estava desalinhando */
+    padding: 0;
+    font-size: 14px;  /* igual aos links da navbar */
+    font-weight: 500;
 }
 
-/* 2. Adicione esta nova regra para controlar o tamanho do SVG */
+.logo-circulo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    background-color: #fff;
+    border-radius: 50%;
+    margin-right: 5px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
 .logo-img {
     width: 100%;
     height: 100%;
-    object-fit: contain;     /* Faz o SVG diminuir proporcionalmente sem distorcer */
-    padding: 6px;            /* Dá um respiro para a logo não encostar na borda do círculo */
+    object-fit: contain;
+    padding: 6px;
 }
-
 
 .search-container {
     flex: 1;
-    max-width: 500px; 
-    margin: 0 20px; /* Espaçamento lateral */
-    position: relative;
+    max-width: 500px;
+    margin: 0 20px;
 }
 
 .search-bar {
@@ -87,7 +82,7 @@ header {
     background: none;
     border: none;
     padding: 0;
-    font-size: 1.5rem; /* Tamanho do emoji 👤 */
+    font-size: 1.5rem;
     cursor: pointer;
     transition: transform 0.2s ease;
 }
@@ -96,29 +91,26 @@ header {
     transform: scale(1.1);
 }
 
-/* Ajustes finos para o menu não quebrar o layout */
 .dropdown-menu {
     border-radius: 8px;
     margin-top: 10px !important;
 }
 
 .admin-button {
-   /* white-space: nowrap;*/
     padding: 8px 14px;
     font-size: 14px;
-    color:#cb005b;
-    }
-/* Corrige a cor do texto dos itens do dropdown para não ficarem brancos no fundo branco */
+    color: #cb005b;
+}
+
 .nav-right .dropdown-menu a.dropdown-item,
 .nav-right .dropdown-menu button.dropdown-item {
-    color: #212529 !important; /* Cor padrão escura do Bootstrap */
+    color: #212529 !important;
     font-size: 14px;
     font-weight: 400;
 }
 
-/* Efeito visual opcional quando passar o mouse nos itens do menu */
 .nav-right .dropdown-menu a.dropdown-item:hover,
 .nav-right .dropdown-menu button.dropdown-item:hover {
-    background-color: #f8f9fa; /* Fundo cinza bem clarinho */
-    color: #cb005b !important; /* Muda o texto para o tom de rosa/vermelho do seu admin-button */
+    background-color: #f8f9fa;
+    color: #cb005b !important;
 }

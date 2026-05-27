@@ -1,102 +1,172 @@
-body { background-color: #f7e7e4; } /* Cor de fundo creme do protótipo */
+/* ===== BASE ===== */
+body {
+    background-color: #f7e7e4;
+}
 
 html {
-            scroll-behavior: smooth;
-        }
-        /* Torna os círculos de categoria visualmente clicáveis */
-        .category-link {
-            text-decoration: none;
-            color: inherit;
-            transition: transform 0.2s ease;
-        }
-        .category-link:hover {
-            transform: scale(1.05);
-            color: #e57373; /* Cor rosa/vermelha idêntica à sua navbar */
-        }
-        
+    scroll-behavior: smooth;
+}
+
+/* ===== TÍTULOS DE SEÇÃO ===== */
 .section-title {
     font-weight: bold;
     color: #555;
     margin-bottom: 20px;
 }
 
-/* 1. Banners */
-.banner-box {
-    height: 200px;
-    background-color: #d9d9d9;
+/* ===== BANNER / CARROSSEL ===== */
+#bannerCarousel {
     border-radius: 15px;
+    overflow: hidden;
 }
 
-/* 2. Círculos de Categoria */
+.carousel-banner-bg {
+    display: block;
+    width: 100%;
+    height: 400px;
+    min-height: 400px;
+    background-size: cover !important;
+    background-position: center center;
+    background-repeat: no-repeat;
+    filter: brightness(0.85);
+}
+
+@media (max-width: 768px) {
+    .carousel-banner-bg {
+        height: 250px;
+        min-height: 250px;
+    }
+}
+
+/* ===== CATEGORIAS ===== */
+.category-link {
+    flex: 0 0 auto;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s ease;
+}
+
+.category-link:hover {
+    transform: translateY(-8px);
+    color: #e57373;
+}
+
+.category-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
 .category-circle {
-    width: 80px;
-    height: 80px;
-    background-color: #d9d9d9;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
-    margin-bottom: 8px;
-    display: inline-block;
+    background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.3s ease;
+    border: 4px solid #fff;
 }
-.category-item span { font-size: 14px; color: #666; display: block; }
 
-/* 3. Cards das Receitas */
+.category-link:hover .category-circle {
+    box-shadow: 0 8px 25px rgba(229, 115, 115, 0.4);
+    border-color: #e57373;
+    transform: scale(1.05);
+}
+
+.category-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.category-link:hover .category-image {
+    transform: scale(1.15);
+}
+
+.category-circle ion-icon {
+    font-size: 48px;
+    color: #e57373;
+}
+
+.category-name {
+    color: #2c3e50;
+    font-weight: 600;
+    font-size: 14px;
+    text-align: center;
+    max-width: 100px;
+    line-height: 1.2;
+    transition: color 0.3s ease;
+}
+
+.category-link:hover .category-name {
+    color: #e57373;
+}
+
+@media (max-width: 768px) {
+    .category-circle {
+        width: 80px;
+        height: 80px;
+    }
+
+    .category-circle ion-icon {
+        font-size: 36px;
+    }
+
+    .category-name {
+        font-size: 12px;
+        max-width: 80px;
+    }
+}
+
+/* ===== CARDS DE RECEITA (mini) ===== */
 .recipe-thumb {
     height: 120px;
-    background-color: #d9d9d9;
+    background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+    transition: transform 0.3s ease;
 }
 
 .mini-recipe-card {
     border: none;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+.mini-recipe-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(229, 115, 115, 0.4);
 }
 
-/* Ajuste para ter 5 colunas na mesma linha no Bootstrap */
+.mini-recipe-card:hover .recipe-thumb img {
+    transform: scale(1.1);
+}
+
+.recipe-thumb {
+    overflow: hidden; /* necessário para o zoom da imagem não vazar */
+}
+
+.recipe-thumb img {
+    transition: transform 0.4s ease;
+}
+
+
 @media (min-width: 768px) {
     .recipe-section .col {
         flex: 0 0 20%;
         max-width: 20%;
     }
 }
-.banner{
-    height: 200px;
-    background-color: #d9d9d9;
-    border-radius: 15px;
-    object-fit: cover;
-}
-/* Container do carrossel para garantir bordas arredondadas perfeitas */
-#bannerCarousel {
-    border-radius: 15px;
-    overflow: hidden;
-}
 
-/* Estilização da imagem do carrossel */
-/* Nova regra para controlar o banner perfeitamente */
-/* Nova regra para controlar o banner perfeitamente (Atualizada e Blindada) */
-.carousel-banner-bg {
-    display: block;                     /* Força a div a se comportar como um bloco cheio */
-    width: 100%;                        /* Garante 100% da largura da tela */
-    height: 400px;                      /* Altura fixa para computadores */
-    min-height: 400px;                  /* Impede o Bootstrap de esmagar a altura */
-    background-size: cover !important;  /* Força o corte proporcional sem distorcer NUNCA */
-    background-position: center center; /* Mantém o foco exatamente no meio da foto */
-    background-repeat: no-repeat;       /* Evita que a imagem se duplique */
-    filter: brightness(0.85);           /* Mantém o tom escuro para o texto destacar */
-}
-
-/* Garante o tamanho correto e proporcional em telas menores/celulares */
-@media (max-width: 768px) {
-    .carousel-banner-bg {
-        height: 250px;                  
-        min-height: 250px;              /* Ajusta o limite mínimo no celular */
-    }
-}
-/* Adicione isso ao seu arquivo public/css/home.css */
-
-/* ============================================
-   SEÇÃO DE RESULTADOS DA BUSCA
-   ============================================ */
-
+/* ===== SEÇÃO DE RESULTADOS DA BUSCA ===== */
 .search-results-section {
     background: linear-gradient(135deg, #f8f9fa 0%, #fff 100%);
     border-radius: 20px;
@@ -126,14 +196,17 @@ html {
     font-style: italic;
 }
 
-.search-results-count {
-    color: #6c757d;
-    font-size: 16px;
-    margin-bottom: 25px;
-    font-weight: 500;
+.results-badge {
+    background: linear-gradient(135deg, #e57373 0%, #ef5350 100%);
+    color: white;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-left: 10px;
+    box-shadow: 0 2px 8px rgba(229, 115, 115, 0.3);
 }
 
-/* Cards de Resultado */
 .search-result-card {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border: none;
@@ -176,10 +249,6 @@ html {
     overflow: hidden;
 }
 
-.search-result-card .card-text {
-    margin-bottom: 15px;
-}
-
 .search-result-card .card-text small {
     display: flex;
     align-items: center;
@@ -208,7 +277,6 @@ html {
     box-shadow: 0 4px 12px rgba(229, 115, 115, 0.4);
 }
 
-/* Placeholder quando não há imagem */
 .search-result-placeholder {
     height: 240px;
     background: linear-gradient(135deg, #f5f5f5 0%, #eeeeee 100%);
@@ -226,7 +294,7 @@ html {
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
     animation: shimmer 2s infinite;
 }
 
@@ -240,7 +308,6 @@ html {
     color: #bdbdbd;
 }
 
-/* Alert de "Nenhum resultado" */
 .search-results-section .alert-warning {
     background: linear-gradient(135deg, #fff3cd 0%, #fff8e1 100%);
     border: 2px solid #ffc107;
@@ -287,7 +354,6 @@ html {
     box-shadow: 0 4px 12px rgba(96, 125, 139, 0.4);
 }
 
-/* Responsividade */
 @media (max-width: 768px) {
     .search-results-section {
         padding: 30px 20px;
@@ -308,108 +374,5 @@ html {
     .search-results-section .alert-warning {
         flex-direction: column;
         text-align: center;
-    }
-}
-
-/* Badge de contador de resultados */
-.results-badge {
-    background: linear-gradient(135deg, #e57373 0%, #ef5350 100%);
-    color: white;
-    padding: 6px 16px;
-    border-radius: 20px;
-    font-size: 14px;
-    font-weight: 600;
-    margin-left: 10px;
-    box-shadow: 0 2px 8px rgba(229, 115, 115, 0.3);
-}
-
-/* ============================================
-   CATEGORIAS COM IMAGENS
-   ============================================ */
-
-.category-link {
-    flex: 0 0 auto;
-    transition: transform 0.3s ease;
-}
-
-.category-link:hover {
-    transform: translateY(-8px);
-}
-
-.category-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-}
-
-.category-circle {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    position: relative;
-    transition: all 0.3s ease;
-    border: 4px solid #fff;
-}
-
-.category-link:hover .category-circle {
-    box-shadow: 0 8px 25px rgba(229, 115, 115, 0.4);
-    border-color: #e57373;
-    transform: scale(1.05);
-}
-
-/* Imagem da categoria */
-.category-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.4s ease;
-}
-
-.category-link:hover .category-image {
-    transform: scale(1.15);
-}
-
-/* Ícone quando não há imagem */
-.category-circle ion-icon {
-    font-size: 48px;
-    color: #e57373;
-}
-
-/* Nome da categoria */
-.category-name {
-    color: #2c3e50;
-    font-weight: 600;
-    font-size: 14px;
-    text-align: center;
-    max-width: 100px;
-    line-height: 1.2;
-    transition: color 0.3s ease;
-}
-
-.category-link:hover .category-name {
-    color: #e57373;
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-    .category-circle {
-        width: 80px;
-        height: 80px;
-    }
-    
-    .category-circle ion-icon {
-        font-size: 36px;
-    }
-    
-    .category-name {
-        font-size: 12px;
-        max-width: 80px;
     }
 }
