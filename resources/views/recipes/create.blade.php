@@ -16,7 +16,7 @@
         <div class="row">
             <div class="col-md-6 text-center">
                 <div class="image-upload-container">
-                    <div class="image-placeholder"></div>
+                    <div class="image-placeholder" id ="imagemPreviewContainer"></div>
                     <label for="image" class="btn-upload">
                         Carregar imagem <ion-icon name="cloud-upload-outline"></ion-icon>
                         <input type="file" id="image" name="image" hidden> 
@@ -65,3 +65,23 @@
     </form>
 </div>
 @endsection
+
+
+@push('scripts') <!-- -->
+<script>
+    document.getElementById('image').addEventListener('change', function (e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function (event) {
+            const container = document.getElementById('imagemPreviewContainer');
+            container.style.backgroundImage = `url('${event.target.result}')`;
+            container.style.backgroundSize = 'cover';
+            container.style.backgroundPosition = 'center';
+            container.style.backgroundRepeat = 'no-repeat';
+        };
+        reader.readAsDataURL(file);
+    });
+</script>
+@endpush

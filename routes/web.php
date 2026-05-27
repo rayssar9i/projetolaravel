@@ -5,9 +5,8 @@ use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\RecipeApprovalController;
 use Illuminate\Support\Facades\Route;
 
-// ============================================
+
 // ROTAS PÚBLICAS
-// ============================================
 
 Route::get('/', function () {
        if (auth()->check()) {
@@ -18,9 +17,7 @@ Route::get('/', function () {
 
 Route::get('/home', [RecipeController::class, 'index'])->name('home');
 
-// ============================================
-// ROTAS AUTENTICADAS
-// ============================================
+// ROTAS AUTENTICADAS controllers/middleware
 
 Route::middleware(['auth', 'verified'])->group(function () {
     

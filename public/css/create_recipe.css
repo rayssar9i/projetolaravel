@@ -71,3 +71,10 @@ body{
     font-weight: bold;
     float: right;
 }
+
+.image-placeholder {
+    width: 100%;
+    height: 300px; /* ou o valor que já usa */
+    border: 2px dashed #ccc;
+    border-radius: 12px;
+}

@@ -23,7 +23,7 @@ class RecipeController extends Controller
         $recipes = $approvedRecipes; //exibe todas aprovados 
     }
 
-    // Trazemos as receitas aprovadas de uma vez só para filtrar na memória (evita bombardeie ao BD)
+    // Trazemos as receitas aprovadas de uma vez só para filtrar na memória 
     
 
     return view('recipes.home', [
